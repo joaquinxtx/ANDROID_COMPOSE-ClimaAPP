@@ -1,9 +1,5 @@
 package com.joaquindev.climaapp.data.source.dto.weatherDto
 
-import com.joaquindev.climaapp.data.source.dto.weatherDto.Clouds
-import com.joaquindev.climaapp.data.source.dto.weatherDto.Coord
-import com.joaquindev.climaapp.data.source.dto.weatherDto.Main
-import com.joaquindev.climaapp.data.source.dto.weatherDto.Sys
 import com.joaquindev.climaapp.domain.model.WeatherResponseDomain
 
 data class WeatherResponse(

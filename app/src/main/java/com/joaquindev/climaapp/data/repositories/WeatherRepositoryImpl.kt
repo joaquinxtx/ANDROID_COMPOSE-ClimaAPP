@@ -15,28 +15,31 @@ import java.io.IOException
 
 import javax.inject.Inject
 
-class WeatherRepositoryImpl @Inject constructor(private val apiService: WeatherApiService):WeatherRepository {
+class WeatherRepositoryImpl @Inject constructor(private val apiService: WeatherApiService) :
+    WeatherRepository {
     override suspend fun getWeather(
         latitude: Double,
         longitude: Double,
         apiKey: String
     ): Flow<Resource<WeatherResponseDomain>> = flow {
         emit(Resource.Loading())
-
         try {
-            val response = apiService.getWeather(latitude,longitude, apiKey).toClimate()
+            val response = apiService.getWeather(latitude, longitude, apiKey).toClimate()
             emit(Resource.Success(response))
-        }catch (e: HttpException){
-            emit(Resource.Error(
-                message = "OOPS ERROR",
-                data = null
-            ))
-        }catch (e: IOException){
-            emit(Resource.Error(
-                message = "OOPS ERROR server , check connection",
-                data = null
-            ))
+        } catch (e: HttpException) {
+            emit(
+                Resource.Error(
+                    message = "OOPS ERROR",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    message = "OOPS ERROR server , check connection",
+                    data = null
+                )
+            )
         }
-
     }
 }

@@ -26,7 +26,6 @@ fun SearchBar(
     val newLocation: String by homeScreenViewModel.newLocation.observeAsState(initial = "")
     Box(modifier = modifier) {
         Column() {
-
             TextField(
                 value = newLocation,
                 onValueChange = { homeScreenViewModel.onNewLocation(it) },
@@ -38,7 +37,7 @@ fun SearchBar(
                 maxLines = 1,
                 singleLine = true,
                 colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xECE2D6),
+                    containerColor = Color(0x19FFFFFF),
                     textColor = Color.White,
                     cursorColor = Color.White,
                     placeholderColor = Color.White
@@ -50,9 +49,7 @@ fun SearchBar(
                         tint = Color.White
                     )
                 }
-
             )
-
             ButtonNewLocation(
                 onClickClimate = {
                     homeScreenViewModel.onClickNewLocation(

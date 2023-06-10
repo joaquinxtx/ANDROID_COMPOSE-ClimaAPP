@@ -19,23 +19,43 @@ class MapRepositoryImpl @Inject constructor(private val apiService: MapApiServic
         location: String,
         limit: Int,
         apiKey: String
-    ): Flow<Resource<List<MapResponseDomain>>> = flow  {
+    ): Flow<Resource<List<MapResponseDomain>>> = flow {
         emit(Resource.Loading())
 
         try {
-            val response = apiService.getCityWeather(location,limit,apiKey).toMapResponseDomain()
-            emit(Resource.Success(response))
+            val response = apiService.getCityWeather(location, limit, apiKey).toMapResponseDomain()
+            if (response.isNotEmpty()) {
+                emit(Resource.Success(response))
+            } else {
+                emit(
+                    Resource.Error(
+                        message = "Response is null",
+                        data = null
+                    )
+                )
+            }
 
-        }catch (e: HttpException){
-            emit(Resource.Error(
-                message = "OOPS ERROR",
-                data = null
-            ))
-        }catch (e: IOException){
-            emit(Resource.Error(
-                message = "OOPS ERROR server , check connection",
-                data = null
-            ))
+        } catch (e: HttpException) {
+            emit(
+                Resource.Error(
+                    message = "OOPS ERROR",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    message = "OOPS ERROR server , check connection",
+                    data = null
+                )
+            )
+        } catch (e: Exception) {
+            emit(
+                Resource.Error(
+                    message = "Unknown error",
+                    data = null
+                )
+            )
         }
     }
 }

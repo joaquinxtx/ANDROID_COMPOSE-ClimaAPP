@@ -1,7 +1,6 @@
 package com.joaquindev.climaapp.data.source
 
 import com.joaquindev.climaapp.data.source.dto.mapDto.MapResponse
-import com.joaquindev.climaapp.data.source.dto.mapDto.MapResponseItem
 import retrofit2.http.GET
 import retrofit2.http.Query
 

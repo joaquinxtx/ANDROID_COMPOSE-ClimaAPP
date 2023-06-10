@@ -12,25 +12,38 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemClimate(tempData: String, iconTemp: Int, title: String, modifier: Modifier) {
-    Card(
-        onClick = {},
-        modifier = modifier.padding(5.dp),
-        colors = CardDefaults.cardColors(Color(0xB20F1314), contentColor = Color.White)
-    ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(). padding(vertical = 10.dp),
-            contentAlignment = Alignment.Center
+fun ItemClimate(
+    tempData: String,
+    iconTemp: Int,
+    title: String,
+    modifier: Modifier,
+    isLoading: Boolean
+) {
+    LoaderItem(isLoading = isLoading) {
+        Card(
+            onClick = {},
+            modifier = modifier.padding(5.dp),
+            colors = CardDefaults.cardColors(Color(0xB20F1314), contentColor = Color.White)
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
+                contentAlignment = Alignment.Center
             ) {
-                Text(text = title, modifier = Modifier.padding(bottom = 5.dp))
-                Image( painter = painterResource(id = iconTemp), contentDescription = "",modifier = Modifier.size(32.dp))
-                Text(text = tempData , modifier = Modifier.padding(top = 5.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = title, modifier = Modifier.padding(bottom = 5.dp))
+                    Image(
+                        painter = painterResource(id = iconTemp),
+                        contentDescription = "",
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Text(text = tempData, modifier = Modifier.padding(top = 5.dp))
+                }
             }
         }
-
     }
 
 }

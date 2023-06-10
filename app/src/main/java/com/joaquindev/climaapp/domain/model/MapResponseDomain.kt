@@ -1,8 +1,6 @@
 package com.joaquindev.climaapp.domain.model
 
-
 import com.joaquindev.climaapp.data.source.dto.mapDto.LocalNames
-
 
 data class MapResponseDomain(
     val country: String,
