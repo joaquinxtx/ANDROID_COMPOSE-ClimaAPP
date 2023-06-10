@@ -10,17 +10,5 @@ data class MapResponseItem(
     val lon: Double,
     val name: String,
     val state: String
-){
-    fun toCountry(): MapResponseDomain {
-        return MapResponseDomain(
-            country= country,
-            lat= lat,
-            local_names= local_names,
-            lon=lon,
-            name= name,
-            state= state
-
-        )
-    }
-}
+)
 

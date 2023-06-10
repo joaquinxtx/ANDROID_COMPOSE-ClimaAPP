@@ -2,6 +2,7 @@ package com.joaquindev.climaapp.data.repositories
 
 import com.joaquindev.climaapp.data.source.MapApiService
 
+import com.joaquindev.climaapp.data.source.dto.mapDto.toMapResponseDomain
 import com.joaquindev.climaapp.domain.Resource
 import com.joaquindev.climaapp.domain.model.MapResponseDomain
 
@@ -18,21 +19,12 @@ class MapRepositoryImpl @Inject constructor(private val apiService: MapApiServic
         location: String,
         limit: Int,
         apiKey: String
-    ): Flow<Resource<MapResponseDomain>> = flow  {
+    ): Flow<Resource<List<MapResponseDomain>>> = flow  {
         emit(Resource.Loading())
 
         try {
-            val response = apiService.getCityWeather(location,limit,apiKey)
-            val convertedResponse = response.firstOrNull()?.toCountry()
-            if (convertedResponse != null){
-            emit(Resource.Success(convertedResponse))
-
-            }else{
-                emit(Resource.Error(
-                    message = "No se encontraron resultados",
-                    data = null
-                ))
-            }
+            val response = apiService.getCityWeather(location,limit,apiKey).toMapResponseDomain()
+            emit(Resource.Success(response))
 
         }catch (e: HttpException){
             emit(Resource.Error(

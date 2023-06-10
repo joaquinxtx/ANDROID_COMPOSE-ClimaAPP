@@ -12,5 +12,5 @@ interface MapRepository {
         location: String,
         limit:Int,
         apiKey:String
-    ):Flow<Resource<MapResponseDomain>>
+    ):Flow<Resource<List<MapResponseDomain>>>
 }
