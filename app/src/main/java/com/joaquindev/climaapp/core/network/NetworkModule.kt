@@ -13,10 +13,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RemoteModule{
+object RemoteModule {
     @Provides
     @Singleton
-    fun provideWeatherApiService():WeatherApiService{
+    fun provideWeatherApiService(): WeatherApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -27,10 +27,10 @@ object RemoteModule{
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RemoteModuleMap{
+object RemoteModuleMap {
     @Provides
     @Singleton
-    fun provideMapApiService():MapApiService{
+    fun provideMapApiService(): MapApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

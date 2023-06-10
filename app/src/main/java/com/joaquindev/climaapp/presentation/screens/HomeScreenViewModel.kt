@@ -1,8 +1,8 @@
 package com.joaquindev.climaapp.presentation.screens
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.*
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joaquindev.climaapp.domain.Resource
@@ -13,79 +13,93 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+
 import javax.inject.Inject
+
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getWeatherUseCase: GetWeatherUseCase,
     private val getMapWeatherUseCase: GetMapWeatherUseCase
-    ) : ViewModel() {
-    var state by mutableStateOf(HomeScreenState(isLoading = true))
-        private set
+) : ViewModel() {
+    private val _state = MutableLiveData(HomeScreenState(isLoading = true))
+    val state: LiveData<HomeScreenState> = _state
 
+    private val _newLocation = MutableLiveData<String>()
+    val newLocation: LiveData<String> = _newLocation
+
+
+
+    fun onNewLocation(newLocation: String) {
+        _newLocation.value = newLocation
+    }
+
+    fun onClickNewLocation(newLocation: String, dataLocation: List<MapResponseDomain>) =
+        viewModelScope.launch {
+            state.value?.location = newLocation
+            getMapWeather()
+            _newLocation.value = ""
+        }
     init {
         getMapWeather()
-        getWeather()
-        Log.d("cahraterssss", state.latitude.toString())
-        Log.d("Locations", state.dataLocation?.forEach{
-            it.state
-        }.toString())
     }
-
-
-    private fun getWeather() {
+    private fun getWeather(longitude:Double , latitude:Double) {
         viewModelScope.launch {
-
-            getWeatherUseCase(state.latitude , state.longitude , state.apiKey).onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        state = state.copy(
-                            climate = result.data !!,
-                            isLoading = false,
-
+            state.value?.let {
+                getWeatherUseCase(latitude,longitude, it.apiKey).onEach { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            _state.value = state.value?.copy(
+                                climate = result.data!!,
+                                isLoading = false,
+                                )
+                        }
+                        is Resource.Error -> {
+                            _state.value = state.value?.copy(
+                                isLoading = false
                             )
+                        }
+                        is Resource.Loading -> {
+                            _state.value = state.value?.copy(
+                                isLoading = true
+                            )
+                        }
                     }
-                    is Resource.Error -> {
-                        state = state.copy(
-                            isLoading = false
-                        )
-
-                    }
-                    is Resource.Loading -> {
-                        state = state.copy(
-                            isLoading = true
-                        )
-                    }
-                }
-            }.launchIn(this)
+                }.launchIn(this)
+            }
         }
     }
-
-    private fun getMapWeather(){
+    private fun getMapWeather() {
         viewModelScope.launch {
-
-            getMapWeatherUseCase(state.location, state.limit , state.apiKey).onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        state = state.copy(
-                            dataLocation = ,
-                            isLoading = false,
-
+            state.value?.let {
+                getMapWeatherUseCase(it.location, it.limit, it.apiKey).onEach { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            val dataLocation = result.data ?: emptyList()
+                            _state.value = state.value?.copy(
+                                dataLocation = dataLocation,
+                                isLoading = false,
                             )
+                            if (dataLocation.isNotEmpty()){
+                                val location = dataLocation[0]
+                                val latitude = location.lat
+                                val longitude= location.lon
+                                getWeather(longitude,latitude)
+                            }
+                        }
+                        is Resource.Error -> {
+                            _state.value = state.value?.copy(
+                                isLoading = false
+                            )
+                        }
+                        is Resource.Loading -> {
+                            _state.value = state.value?.copy(
+                                isLoading = true
+                            )
+                        }
                     }
-                    is Resource.Error -> {
-                        state = state.copy(
-                            isLoading = false
-                        )
-
-                    }
-                    is Resource.Loading -> {
-                        state = state.copy(
-                            isLoading = true
-                        )
-                    }
-                }
-            }.launchIn(this)
+                }.launchIn(this)
+            }
         }
     }
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetMapWeatherUseCase @Inject constructor(private val repository: MapRepository) {
-    suspend operator fun invoke(location:String,limit:Int,apiKey:String): Flow<Resource<MapResponseDomain>> {
+    suspend operator fun invoke(location:String,limit:Int,apiKey:String): Flow<Resource<List<MapResponseDomain>>> {
         return repository.getMapWeather(location,limit,apiKey)
     }
 }
