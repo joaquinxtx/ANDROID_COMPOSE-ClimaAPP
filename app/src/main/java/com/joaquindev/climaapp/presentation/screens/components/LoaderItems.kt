@@ -19,45 +19,18 @@ fun LoaderItem(
     if (isLoading) {
         Box(Modifier.fillMaxWidth()) {
             Row(
-                modifier = Modifier.align(Center),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                modifier = Modifier.fillMaxWidth().padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+
             ) {
                 Box(
                     modifier = Modifier
-                        .padding()
-                        .width(93.dp)
+
+                        .fillMaxWidth()
                         .height(95.dp)
                         .clip(RoundedCornerShape(10.dp))
-                        .shimmerEffect(),
-
-                    )
-                Box(
-                    modifier = Modifier
-                        .padding()
-                        .width(93.dp)
-                        .height(95.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .shimmerEffect(),
-
-                    )
-                Box(
-                    modifier = Modifier
-                        .padding()
-                        .width(93.dp)
-                        .height(95.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .shimmerEffect(),
-
-                    )
-                Box(
-                    modifier = Modifier
-                        .padding()
-                        .width(93.dp)
-                        .height(95.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .shimmerEffect(),
-
-                    )
+                        .shimmerEffect()
+                )
             }
         }
     } else {
