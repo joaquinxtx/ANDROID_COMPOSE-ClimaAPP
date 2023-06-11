@@ -35,8 +35,8 @@ fun Loader(
             modifier = Modifier
                 .padding(horizontal = 5.dp, vertical = 8.dp)
                 .fillMaxWidth()
-                .height(250.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .height(280.dp)
+                .clip(RoundedCornerShape(10.dp))
                 .shimmerEffect(),
         )
     } else {

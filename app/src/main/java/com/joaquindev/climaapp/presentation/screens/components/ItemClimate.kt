@@ -22,13 +22,13 @@ fun ItemClimate(
     LoaderItem(isLoading = isLoading) {
         Card(
             onClick = {},
-            modifier = modifier.padding(5.dp),
+            modifier = modifier.padding(horizontal = 5.dp),
             colors = CardDefaults.cardColors(Color(0xB20F1314), contentColor = Color.White)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+                    .padding(vertical = 5.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(
@@ -38,7 +38,7 @@ fun ItemClimate(
                     Image(
                         painter = painterResource(id = iconTemp),
                         contentDescription = "",
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(29.dp)
                     )
                     Text(text = tempData, modifier = Modifier.padding(top = 5.dp))
                 }

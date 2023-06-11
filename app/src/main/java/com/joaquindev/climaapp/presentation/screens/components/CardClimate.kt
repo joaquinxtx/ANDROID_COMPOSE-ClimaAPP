@@ -35,7 +35,7 @@ fun CardClimate(
                 .padding(horizontal = 5.dp, vertical = 8.dp)
                 .fillMaxWidth()
                 .height(280.dp),
-            colors = CardDefaults.cardColors(Color(0x6F000000), contentColor = Color.White)
+            colors = CardDefaults.cardColors(Color(0xB20F1314), contentColor = Color.White)
         ) {
             Box(
                 modifier = Modifier
