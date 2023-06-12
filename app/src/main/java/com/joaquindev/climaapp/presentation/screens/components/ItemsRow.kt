@@ -33,7 +33,7 @@ fun ItemsRow(climate: WeatherResponseDomain, isLoading: Boolean) {
         ItemClimate(
             tempData = "${climate.wind.speed} k/h ",
             iconTemp = R.drawable.viento,
-            title = "viento",
+            title = "Wind",
             modifier = Modifier.weight(1f), isLoading = isLoading
         )
     }
