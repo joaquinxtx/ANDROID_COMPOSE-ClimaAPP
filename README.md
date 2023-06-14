@@ -19,6 +19,24 @@
 ## Installation:
 
 ```
+// BuildGradle Project
+plugins {
+    id 'com.android.application' version '7.3.1' apply false
+    id 'com.android.library' version '7.3.1' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id 'com.google.dagger.hilt.android' version '2.41' apply false
+}
+// BuildGradle app
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android{
+ compileSdk 33
+}
 Dependencies{
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.activity:activity-compose:1.3.1'
